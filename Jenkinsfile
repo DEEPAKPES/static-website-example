@@ -33,7 +33,9 @@ pipeline
 		
 		stage('call the another pipeline')
 		{
-			build job: 'test-pipeline-child', quietPeriod: 0
+			steps {
+				build job: 'test-pipeline-child', quietPeriod: 0
+			}
 		}
 		
 	}
