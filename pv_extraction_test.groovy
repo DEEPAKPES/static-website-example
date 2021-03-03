@@ -27,108 +27,108 @@ pipeline {
 				{ 
                   if (ALL_CATALOG == 'true') {
                       sh '''
-                                cat <<EOF > se-variants-extractor.yml
+cat <<EOF > se-variants-extractor.yml
                                 apiVersion: batch/v1
                                 kind: Job
-                                metadata:
-                                  name: se-variants-extractor
-                                  namespace: epam
-                                spec:
-                                  ttlSecondsAfterFinished: 20
-                                  template:
-                                    metadata:
-                                      labels:
-                                        job-name: se-variants-extractor
-                                    spec:
-                                      containers:
-                                      - args:
-                                        - --spring.data.mongodb.host=se-variants-mongo
-                                        - --spring.datasource.url=jdbc:oracle:thin:@'''+db_name+'''``
-                                        - --spring.datasource.username=$CATA_USER
-                                        - --spring.datasource.password=$CATA_PASS
-                                        command:
-                                        - java
-                                        - -Xms2g
-                                        - -Xmx6g
-                                        - -XX:+UseG1GC
-                                        - -Doracle.jdbc.fanEnabled=false
-                                        - -jar
-                                        - /app/product-variants-1.0.0.jar
-                                        image: registry.us.se.com/epam/product-data-generator
-                                        imagePullPolicy: Always
-                                        name: se-variants-extractor
-                                        resources:
-                                          requests:
-                                            memory: "4096Mi"
-                                            cpu: "1000m"
-                                          limits:
-                                            memory: "12288Mi"
-                                            cpu: "2000m"
-                                        securityContext:
-                                          allowPrivilegeEscalation: false
-                                          capabilities: {}
-                                          privileged: false
-                                          readOnlyRootFilesystem: false
-                                          runAsNonRoot: false
-                                      imagePullSecrets:
-                                      - name: se
-                                      restartPolicy: Never
-                                EOF
-                            '''.stripIndent()
-                        } else {
+metadata:
+  name: se-variants-extractor
+  namespace: epam
+spec:
+  ttlSecondsAfterFinished: 20
+  template:
+    metadata:
+      labels:
+        job-name: se-variants-extractor
+    spec:
+      containers:
+      - args:
+        - --spring.data.mongodb.host=se-variants-mongo
+        - --spring.datasource.url=jdbc:oracle:thin:@'''+db_name+'''``
+        - --spring.datasource.username=$CATA_USER
+        - --spring.datasource.password=$CATA_PASS
+        command:
+        - java
+        - -Xms2g
+        - -Xmx6g
+        - -XX:+UseG1GC
+        - -Doracle.jdbc.fanEnabled=false
+        - -jar
+        - /app/product-variants-1.0.0.jar
+        image: registry.us.se.com/epam/product-data-generator
+        imagePullPolicy: Always
+        name: se-variants-extractor
+        resources:
+          requests:
+            memory: "4096Mi"
+            cpu: "1000m"
+          limits:
+            memory: "12288Mi"
+            cpu: "2000m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+      imagePullSecrets:
+      - name: se
+      restartPolicy: Never
+EOF
+                      '''.stripIndent()
+                    } else {
                       sh '''
-                                cat <<EOF > se-variants-extractor.yml
-                                apiVersion: batch/v1
-                                kind: Job
-                                metadata:
-                                  name: se-variants-extractor
-                                  namespace: epam
-                                spec:
-                                  ttlSecondsAfterFinished: 20
-                                  template:
-                                    metadata:
-                                      labels:
-                                        job-name: se-variants-extractor
-                                    spec:
-                                      containers:
-                                      - args:
-                                        - --spring.data.mongodb.host=se-variants-mongo
-                                        - --spring.datasource.url=jdbc:oracle:thin:@'''+db_name+'''``
-                                        - --spring.datasource.username=$CATA_USER
-                                        - --spring.datasource.password=$CATA_PASS
-                                        - locales=${LOCALES}
-                                        - sourceIds=${SOURCE_IDS}
-                                        - type=${TYPE}
-                                        command:
-                                        - java
-                                        - -Xms2g
-                                        - -Xmx6g
-                                        - -XX:+UseG1GC
-                                        - -Doracle.jdbc.fanEnabled=false
-                                        - -jar
-                                        - /app/product-variants-1.0.0.jar
-                                        image: registry.us.se.com/epam/product-data-generator
-                                        imagePullPolicy: Always
-                                        name: se-variants-extractor
-                                        resources:
-                                          requests:
-                                            memory: "4096Mi"
-                                            cpu: "1000m"
-                                          limits:
-                                            memory: "12288Mi"
-                                            cpu: "2000m"
-                                        securityContext:
-                                          allowPrivilegeEscalation: false
-                                          capabilities: {}
-                                          privileged: false
-                                          readOnlyRootFilesystem: false
-                                          runAsNonRoot: false
-                                      imagePullSecrets:
-                                      - name: se
-                                      restartPolicy: Never
-                                EOF
-                            '''.stripIndent()
-                        }  
+cat <<EOF > se-variants-extractor.yml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: se-variants-extractor
+  namespace: epam
+spec:
+  ttlSecondsAfterFinished: 20
+  template:
+    metadata:
+      labels:
+        job-name: se-variants-extractor
+    spec:
+      containers:
+      - args:
+        - --spring.data.mongodb.host=se-variants-mongo
+        - --spring.datasource.url=jdbc:oracle:thin:@'''+db_name+'''``
+        - --spring.datasource.username=$CATA_USER
+        - --spring.datasource.password=$CATA_PASS
+        - locales=${LOCALES}
+        - sourceIds=${SOURCE_IDS}
+        - type=${TYPE}
+        command:
+        - java
+        - -Xms2g
+        - -Xmx6g
+        - -XX:+UseG1GC
+        - -Doracle.jdbc.fanEnabled=false
+        - -jar
+        - /app/product-variants-1.0.0.jar
+        image: registry.us.se.com/epam/product-data-generator
+        imagePullPolicy: Always
+        name: se-variants-extractor
+        resources:
+          requests:
+            memory: "4096Mi"
+            cpu: "1000m"
+          limits:
+            memory: "12288Mi"
+            cpu: "2000m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+      imagePullSecrets:
+      - name: se
+      restartPolicy: Never
+EOF
+                      '''.stripIndent()
+                    }  
 				}
                 } catch (Exception e) {
                     echo 'Exception occurred: ' + e.toString()
