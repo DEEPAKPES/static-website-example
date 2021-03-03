@@ -26,7 +26,7 @@ pipeline {
 			    withCredentials([usernamePassword(credentialsId: credentials_id, passwordVariable: 'CATA_PASS', usernameVariable: 'CATA_USER')])
 				{ 
                   if (ALL_CATALOG == 'true') {
-                            sh '''
+                      sh '''
                                 cat <<EOF > se-variants-extractor.yml
                                 apiVersion: batch/v1
                                 kind: Job
@@ -73,10 +73,10 @@ pipeline {
                                       imagePullSecrets:
                                       - name: se
                                       restartPolicy: Never
-                                EOF
+                      EOF
                             '''.stripIndent()
                         } else {
-                            sh '''
+                      sh '''
                                 cat <<EOF > se-variants-extractor.yml
                                 apiVersion: batch/v1
                                 kind: Job
@@ -126,7 +126,7 @@ pipeline {
                                       imagePullSecrets:
                                       - name: se
                                       restartPolicy: Never
-                                EOF
+                      EOF
                             '''.stripIndent()
                         }  
 				}
