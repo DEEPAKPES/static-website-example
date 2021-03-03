@@ -7,17 +7,10 @@ def dbname(){
     if (params.ENVIRONMENT == 'INT'){
 		return [db_name:'lpesipo1000int.schneider-electric.com:1521:pesv2int' , credentials_id:'5e3e48a8-651d-48bd-813c-a3735c8af832']
     }else if (params.ENVIRONMENT == 'PPR'){
-        env_info["db_name"] = "ppr_database"
-	env_info["credentials_id"] = "ppr_credentials_id"
-	env_info["user_name"] = "ppr_user_name"
-	env_info["password"] = "ppr_password"       
+        return [db_name:'pprlpesipo1000int.schneider-electric.com:1521:pesv2int' , credentials_id:'ppr5e3e48a8-651d-48bd-813c-a3735c8af832']    
     }else if (params.ENVIRONMENT == 'PRD'){
-      	env_info["db_name"] = "prd_database"
-	env_info["credentials_id"] = "prd_credentials_id"
-	env_info["user_name"] = "prd_user_name"
-	env_info["password"] = "prd_password"    
-    }
-    return JsonOutput.prettyPrint(JsonOutput.toJson(env_info)) 
+      	return [db_name:'prlpesipo1000int.schneider-electric.com:1521:pesv2int' , credentials_id:'pr5e3e48a8-651d-48bd-813c-a3735c8af832']   
+    } 
 }
 
 pipeline {
