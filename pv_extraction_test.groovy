@@ -1,5 +1,3 @@
-import groovy.json.JsonOutput
-
 def dbname(){
     if (params.ENVIRONMENT == 'INT'){
 		return [db_name:'lpesipo1000int.schneider-electric.com:1521:pesv2int' , credentials_id:'5e3e48a8-651d-48bd-813c-a3735c8af832']
