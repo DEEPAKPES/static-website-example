@@ -4,8 +4,8 @@ def dbhostname
 def destdb
 def dbname(){	
     if (params.ENVIRONMENT == 'INT'){
-	db_name = "lpesipo1000int.schneider-electric.com:1521:pesv2int"
-	credentials_id = "5e3e48a8-651d-48bd-813c-a3735c8af832"  
+	return db_name = "lpesipo1000int.schneider-electric.com:1521:pesv2int"
+	return credentials_id = "5e3e48a8-651d-48bd-813c-a3735c8af832"  
     }else if (params.ENVIRONMENT == 'PPR'){
         db_name = "0lpesipo1000int.schneider-electric.com:1521:pesv2int"
 	credentials_id = "05e3e48a8-651d-48bd-813c-a3735c8af832"
