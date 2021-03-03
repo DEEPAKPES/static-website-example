@@ -19,8 +19,9 @@ pipeline {
         timestamps()
     }
 
-    try {
-        stages {
+
+    stages {
+        try {
             stage("Display the Env variables") {
                 steps {
                 script{
@@ -91,9 +92,9 @@ pipeline {
                     }
                 }
             }
-        }    
-    } catch (Exception e) {
+        } catch (Exception e) {
                         echo 'Exception occurred: ' + e.toString()
                         sh 'Envalid DB selected'
-                    }
+        }
+    }
 }
