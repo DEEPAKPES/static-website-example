@@ -28,8 +28,8 @@ pipeline {
                   if (ALL_CATALOG == 'true') {
                       sh '''
 cat <<EOF > se-variants-extractor.yml
-                                apiVersion: batch/v1
-                                kind: Job
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: se-variants-extractor
   namespace: epam
