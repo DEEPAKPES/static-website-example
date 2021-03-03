@@ -73,7 +73,7 @@ pipeline {
                                       imagePullSecrets:
                                       - name: se
                                       restartPolicy: Never
-                      EOF
+                                EOF
                             '''.stripIndent()
                         } else {
                       sh '''
@@ -126,7 +126,7 @@ pipeline {
                                       imagePullSecrets:
                                       - name: se
                                       restartPolicy: Never
-                      EOF
+                                EOF
                             '''.stripIndent()
                         }  
 				}
