@@ -23,10 +23,14 @@ pipeline {
         stage("Display the Env variables") {
             steps {
 		    script{
-			
+			try {
 				data = dbname()
 				db_name = data.db_name
 				credentials_id = data.credentials_id
+                } catch (Exception e) {
+                    echo 'Exception occurred: ' + e.toString()
+                    sh 'Envalid DB selected'
+                }
 			    withCredentials([usernamePassword(credentialsId: credentials_id, passwordVariable: 'CATA_PASS', usernameVariable: 'CATA_USER')])
 				{ 
                     sh '''
