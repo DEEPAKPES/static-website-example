@@ -112,7 +112,7 @@ pipeline {
                                       containers:
                                       - args:
                                         - --spring.data.mongodb.host=se-variants-mongo
-                                        - --spring.datasource.url=jdbc:oracle:thin:@lpesipo1000int.schneider-electric.com:1521:pesv2int
+                                        - --spring.datasource.url=jdbc:oracle:thin:@`db_name`
                                         - --spring.datasource.username=$CATA_USER
                                         - --spring.datasource.password=$CATA_PASS
                                         - locales=${LOCALES}
