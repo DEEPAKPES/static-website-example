@@ -5,8 +5,7 @@ def destdb
 def dbname(){
     def env_info=["db_name":"","credentials_id":"","user_name":"","password":""]	
     if (params.ENVIRONMENT == 'INT'){
-	env_info["db_name"] = "lpesipo1000int.schneider-electric.com:1521:pesv2int"
-	env_info["credentials_id"] = "5e3e48a8-651d-48bd-813c-a3735c8af832"  
+		return [db_name:'lpesipo1000int.schneider-electric.com:1521:pesv2int' , credentials_id:'5e3e48a8-651d-48bd-813c-a3735c8af832']
     }else if (params.ENVIRONMENT == 'PPR'){
         env_info["db_name"] = "ppr_database"
 	env_info["credentials_id"] = "ppr_credentials_id"
@@ -20,11 +19,6 @@ def dbname(){
     }
     return JsonOutput.prettyPrint(JsonOutput.toJson(env_info)) 
 }
-def dbdestdb(){
-    if (params.ENVIRONMENT == 'INT'){
-        destdb = 'kaasmongo'
-    }
-}
 
 pipeline {
     agent any
@@ -37,15 +31,12 @@ pipeline {
         stage("Display the Env variables") {
             steps {
 		    script{
-			    def info="${dbname()}"
-			    def props = readJSON text: info, returnPojo: true
-                credentials_id=props['credentials_id']
-                db_name=props['db_name']
-			    db_name=db_name.replace('\n','')
-			    echo db_name
+			
+				data = dbname()
+				db_name = data.db_name
+				credentials_id = data.credentials_id
 			    withCredentials([usernamePassword(credentialsId: credentials_id, passwordVariable: 'CATA_PASS', usernameVariable: 'CATA_USER')])
 				{ 
-					echo "db name : ${db_name}"
                     sh '''
                                   cat <<EOF > se-variants-extractor.yml
                                   apiVersion: batch/v1
@@ -62,7 +53,7 @@ pipeline {
                                       spec:
                                         containers:
                                         - args:
-                                          - --spring.data.mongodb.host=se-variants-mongo
+                                          - --spring.data.mongodb.host='''+credentials_id+'''``
                                           - --spring.datasource.url=jdbc:oracle:thin:@'''+db_name+'''``
                                           - --spring.datasource.username=$CATA_USER
                                           - --spring.datasource.password=$CATA_PASS
