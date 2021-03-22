@@ -33,5 +33,79 @@ pipeline {
                 }
             }
         }
+        stage("Display the Env variables") {
+            steps {
+            script{
+            try {
+                data = source_dbname()
+                source_db_name = data.db_name
+                source_credentials_id = data.credentials_id
+
+                dest_db = destination_dbname()
+                destination_db_name = dest_db.db_name
+                dest_credentials_id = dest_db.credentials_id
+
+                withCredentials([usernamePassword(credentialsId: source_credentials_id, passwordVariable: 'CATA_PASS', usernameVariable: 'CATA_USER')])
+                {
+                      sh '''
+cat <<EOF > se-variants-extractor.yml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: se-variants-extractor
+  namespace: epam
+spec:
+  ttlSecondsAfterFinished: 20
+  template:
+    metadata:
+      labels:
+        job-name: se-variants-extractor
+    spec:
+      containers:
+      - args:
+        - --spring.data.mongodb.host='''+destination_db_name+'''``
+        - --spring.datasource.url=jdbc:oracle:thin:@'''+source_db_name+'''``
+        - --spring.datasource.username=$CATA_USER
+        - --spring.datasource.password=$CATA_PASS
+        - locales=${LOCALES}
+        - sourceIds=${SOURCE_IDS}
+        - type=${TYPE}
+        command:
+        - java
+        - -Xms2g
+        - -Xmx6g
+        - -XX:+UseG1GC
+        - -Doracle.jdbc.fanEnabled=false
+        - -jar
+        - /app/product-variants-1.0.0.jar
+        image: registry.us.se.com/epam/product-data-generator
+        imagePullPolicy: Always
+        name: se-variants-extractor
+        resources:
+          requests:
+            memory: "4096Mi"
+            cpu: "1000m"
+          limits:
+            memory: "12288Mi"
+            cpu: "2000m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+      imagePullSecrets:
+      - name: se
+      restartPolicy: Never
+EOF
+                      '''.stripIndent()
+                }
+                } catch (Exception e) {
+                    echo 'Exception occurred: ' + e.toString()
+                    echo 'Envalid DB selected'
+                    currentBuild.result = 'FAILURE'
+                }
+            }
+        }
     }
 }
