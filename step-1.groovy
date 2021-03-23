@@ -105,5 +105,13 @@ EOF
             }
         }
         }
+        stage("Run the Other Job") {
+            when {
+                expression { currentBuild.result != 'FAILURE' }
+            }
+            steps {
+                  build job: "test-2", wait: true
+            }
+        }
     }
 }
