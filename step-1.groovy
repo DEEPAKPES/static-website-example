@@ -38,6 +38,9 @@ pipeline {
                 data = source_dbname()
                 source_db_name = data.db_name
                 source_credentials_id = data.credentials_id
+                
+                dest_db = destination_dbname()
+                destination_db_name = dest_db.db_name
 
                 withCredentials([usernamePassword(credentialsId: source_credentials_id, passwordVariable: 'CATA_PASS', usernameVariable: 'CATA_USER')])
                 {
