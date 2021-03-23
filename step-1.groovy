@@ -1,10 +1,10 @@
 def source_dbname(){
     if (params.SOURCE_ORACLE_ENV == 'INT_ORACLE'){
-        return [db_name:'lpesipo1000int.schneider-electric.com:1521:pesv2int' , credentials_id:'']
+        return [db_name:'lpesipo1000int.schneider-electric.com:1521:pesv2int' , credentials_id:'27fa5858-1eee-4763-b625-2456936cec0d']
     }else if (params.SOURCE_ORACLE_ENV == 'PRE_PROD'){
-        return [db_name:'lpesipo1009ppr.schneider-electric.com:1521:pesv2ppr' , credentials_id:'']
+        return [db_name:'lpesipo1009ppr.schneider-electric.com:1521:pesv2ppr' , credentials_id:'27fa5858-1eee-4763-b625-2456936cec0d']
     }else if (params.SOURCE_ORACLE_ENV == 'PROD_STANDBY_DB'){
-        return [db_name:'lpesipo1010prd.schneider-electric.com:1521:pesv2prdstby' , credentials_id:'']
+        return [db_name:'lpesipo1010prd.schneider-electric.com:1521:pesv2prdstby' , credentials_id:'27fa5858-1eee-4763-b625-2456936cec0d']
     }
 }
 
