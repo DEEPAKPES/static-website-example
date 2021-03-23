@@ -6,7 +6,9 @@ pipeline {
             steps {
                 echo 'Hello World'
                 script{
-                  echo ${THREADS}
+                  echo "Number of threads are : ${THREADS}"
+                  echo "The Image ID is : ${IMAGE_ID}"
+                  echo "The ranges are : ${RANGES}"
                 }
             }
         }
