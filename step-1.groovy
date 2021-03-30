@@ -110,7 +110,7 @@ EOF
                 expression { currentBuild.result != 'FAILURE' }
             }
             steps {
-                  build job: "test-2", wait: true
+                  build job: "test-2", parameters: [[$class: 'StringParameterValue', name: 'source_mongo', value: params.PRODUCTS_ML_DB_ENV], [$class: 'StringParameterValue', name: 'dest_mongo', value: 'lpesipo1050sqe.schneider-electric.com']]
             }
         }
     }
