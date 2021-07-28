@@ -1,10 +1,16 @@
-language: bash
+language: go
 
-sudo: required
+before_install: 
+- wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
+- unzip terraform_"$tf_version"_linux_amd64.zip
+- sudo mv terraform /usr/local/bin/
 
-services: 
-- docker
+install: true
+
+env:
+  global:
+    - tf_version=0.15.0
 
 script:
-- echo "check the docker version"
-- docker --version
+- echo "check the terraform version"
+- terraform --version
