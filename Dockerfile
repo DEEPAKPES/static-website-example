@@ -1,5 +1,5 @@
 ###########################################
-#  Docker Image for OpenShift Deployment  #
+# MY Docker Image for OpenShift Deployment  #
 ###########################################
 
 FROM centos:7
